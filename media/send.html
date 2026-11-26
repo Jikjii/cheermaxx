@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>media</title></head>
+<body>
+<script>
+  // Hands a promo video to the page that embedded this one (used for uploading promo clips).
+  const name = new URLSearchParams(location.search).get('f') || 'vera.mp4';
+  if (/^[a-z0-9_-]+\.mp4$/i.test(name)) {
+    fetch(name).then(r => r.blob()).then(b => parent.postMessage({cmxVideo: b, name}, '*'));
+  }
+</script>
+</body></html>
