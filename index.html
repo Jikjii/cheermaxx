@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CheerMaxx · AI Cheer Coach | Score Your Tumbling</title>
+<meta name="description" content="Film your tumbling pass on your phone. CheerMaxx scores it like a judge and tells you exactly what to fix. Join the waitlist.">
+<meta property="og:title" content="CheerMaxx · AI Cheer Coach">
+<meta property="og:description" content="Film your pass. Get a score out of 10 and the exact fixes. Join the waitlist.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#ff3d7f;--pink2:#ff7aa8;--soft:#fff0f5;--ink:#141015;--muted:#6f6670;--line:#f1e6ea;--bg:#fffafb}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.4px;text-decoration:none;color:var(--ink)}
+  .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--pink2),var(--pink));display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px;letter-spacing:-.5px;font-style:italic}
+  .navbtn{font-size:14px;font-weight:700;color:#fff;background:var(--ink);padding:10px 18px;border-radius:999px;text-decoration:none}
+
+  .hero{text-align:center;padding:56px 0 30px;position:relative}
+  .hero::before{content:"";position:absolute;left:50%;top:-40px;transform:translateX(-50%);width:min(900px,100%);height:620px;z-index:-1;
+    background:radial-gradient(closest-side,#ffd9e6 0%,rgba(255,217,230,.45) 45%,transparent 100%)}
+  .badge{display:inline-block;font-size:13px;font-weight:700;color:var(--pink);background:#fff;border:1px solid var(--line);padding:8px 14px;border-radius:999px;box-shadow:0 2px 10px rgba(255,61,127,.08)}
+  h1{font-size:clamp(52px,9vw,104px);font-weight:800;letter-spacing:-.045em;line-height:1;margin:22px 0 14px}
+  h1 span{background:linear-gradient(135deg,var(--pink2),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{font-size:clamp(20px,2.6vw,26px);font-weight:700;letter-spacing:-.02em}
+  .lede{max-width:560px;margin:12px auto 0;font-size:17px;line-height:1.6;color:var(--muted)}
+  form{display:flex;gap:8px;max-width:440px;margin:28px auto 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:6px;box-shadow:0 8px 30px rgba(20,16,21,.06)}
+  input[type=email]{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:15px;padding:0 14px;background:transparent;color:var(--ink)}
+  button{border:0;font:inherit;font-weight:700;font-size:15px;color:#fff;background:var(--pink);padding:13px 20px;border-radius:12px;cursor:pointer;white-space:nowrap;box-shadow:0 6px 18px rgba(255,61,127,.35)}
+  button:hover{filter:brightness(1.05)}
+  .fine{font-size:13px;color:var(--muted);margin-top:12px}
+  .thanks{display:none;max-width:440px;margin:24px auto 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;font-weight:700}
+
+  /* phone */
+  .phone-stage{display:flex;justify-content:center;padding:40px 0 10px}
+  .phone{width:300px;height:610px;border-radius:52px;background:#111;padding:12px;box-shadow:0 40px 80px rgba(20,16,21,.18),0 0 0 1px #2a2a2a inset}
+  .screen{text-align:left;width:100%;height:100%;border-radius:41px;background:#fff;overflow:hidden;position:relative;padding:46px 18px 18px}
+  .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:92px;height:26px;border-radius:20px;background:#111}
+  .status{position:absolute;top:15px;left:26px;font-size:12px;font-weight:700}
+  .s-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:var(--muted)}
+  .s-title{font-size:20px;font-weight:800;letter-spacing:-.02em;margin:10px 0 14px}
+  .thumb{height:118px;border-radius:16px;background:linear-gradient(160deg,#ffe3ec,#ffc6d8);position:relative;overflow:hidden}
+  .thumb svg{position:absolute;inset:0;margin:auto}
+  .play{position:absolute;right:10px;bottom:10px;font-size:11px;font-weight:700;background:rgba(255,255,255,.9);padding:5px 9px;border-radius:999px}
+  .ring-row{display:flex;align-items:center;gap:14px;margin:16px 0 10px}
+  .ring{width:86px;height:86px;border-radius:50%;background:conic-gradient(var(--pink) 0 84%,#f6e3ea 84% 100%);display:grid;place-items:center;flex:none}
+  .ring div{width:68px;height:68px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:24px;letter-spacing:-.03em}
+  .ring small{font-size:11px;color:var(--muted);font-weight:700;margin-top:-6px}
+  .verdict b{display:block;font-size:15px}
+  .verdict span{font-size:12px;color:var(--muted)}
+  .metric{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-top:9px}
+  .track{height:6px;border-radius:6px;background:#f6e3ea;margin-top:5px}
+  .track i{display:block;height:100%;border-radius:6px;background:var(--pink)}
+  .fixbox{margin-top:14px;background:var(--soft);border-radius:14px;padding:11px 12px;font-size:12px;line-height:1.45}
+  .fixbox b{display:block;font-size:12px;color:var(--pink);margin-bottom:3px}
+
+  section{padding:84px 0}
+  .kicker{text-align:center;font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.08em;text-transform:uppercase}
+  h2{text-align:center;font-size:clamp(32px,4.6vw,46px);font-weight:800;letter-spacing:-.035em;margin:10px 0 12px}
+  .center-sub{text-align:center;color:var(--muted);font-size:17px;margin-bottom:44px}
+
+  /* App Store panels */
+  .panels{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border-radius:28px;background:linear-gradient(170deg,var(--pink2),var(--pink));padding:28px 22px 0;color:#fff;height:440px;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .panel h3{font-size:25px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .panel p{font-size:13px;opacity:.9;margin-top:6px;font-weight:600}
+  .mini{margin-top:22px;width:210px;flex:1;background:#111;border-radius:34px 34px 0 0;padding:9px 9px 0}
+  .mini .sc{background:#fff;border-radius:27px 27px 0 0;height:100%;padding:28px 14px 0;color:var(--ink);text-align:left}
+  .mini .big{font-size:40px;font-weight:800;letter-spacing:-.04em}
+  .mini .lbl{font-size:11px;font-weight:700;color:var(--muted)}
+  .chip{display:inline-block;font-size:11px;font-weight:700;background:var(--soft);color:var(--pink);padding:5px 9px;border-radius:999px;margin:6px 4px 0 0}
+  .row{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;padding:9px 0;border-bottom:1px solid var(--line)}
+  .row span{color:var(--pink)}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px}
+  .step .n{width:38px;height:38px;border-radius:12px;background:var(--soft);color:var(--pink);display:grid;place-items:center;font-weight:800}
+  .step h3{font-size:19px;font-weight:800;letter-spacing:-.02em;margin:16px 0 8px}
+  .step p{color:var(--muted);line-height:1.6;font-size:15px}
+  .feats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px}
+  .ico{width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center}
+  .ico svg{width:20px;height:20px;stroke:var(--pink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .feat h3{font-size:16px;font-weight:800;margin:14px 0 6px;letter-spacing:-.01em}
+  .feat p{font-size:14px;color:var(--muted);line-height:1.55}
+  .cta{background:var(--ink);color:#fff;border-radius:36px;text-align:center;padding:64px 24px}
+  .cta h2{color:#fff}
+  .cta .center-sub{color:#b9aeb6;margin-bottom:0}
+  .cta form{border-color:#2d2530;background:#1f1a21;box-shadow:none}
+  .cta input[type=email]{color:#fff}
+  .cta .thanks{background:#1f1a21;border-color:#2d2530;color:#fff}
+  footer{padding:36px 0 56px;display:flex;justify-content:space-between;color:var(--muted);font-size:14px;flex-wrap:wrap;gap:12px}
+  footer a{color:var(--muted);text-decoration:none;margin-left:18px}
+
+  @media (max-width:900px){.panels{grid-template-columns:1fr;max-width:380px;margin:0 auto}.steps{grid-template-columns:1fr}.feats{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){
+    form{flex-direction:column}
+    input[type=email]{padding:13px 12px}
+    .feats{grid-template-columns:1fr}
+    .phone{transform:scale(.92);transform-origin:top center}
+    footer{justify-content:center;text-align:center}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#"><span class="mark">CM</span>CheerMaxx</a>
+    <a class="navbtn" href="#join">Join waitlist</a>
+  </nav>
+
+  <header class="hero">
+    <span class="badge">AI coach for all-star &amp; school cheer</span>
+    <h1>Cheer<span>Maxx</span></h1>
+    <p class="tag">Your pass, scored like a judge.</p>
+    <p class="lede">Film your tumbling on your phone. Get a score out of 10, a full skill breakdown and the exact fixes to land it cleaner before tryouts.</p>
+    <form class="wl" action="https://formsubmit.co/geraldoevon@gmail.com" method="POST">
+      <input type="email" name="email" placeholder="Enter your email" required>
+      <input type="hidden" name="_subject" value="New CheerMaxx waitlist signup">
+      <input type="hidden" name="_captcha" value="false">
+      <button type="submit">Get early access</button>
+    </form>
+    <p class="fine">Launching soon on iPhone. Free to try.</p>
+    <div class="thanks">You're on the list. We'll email you when CheerMaxx launches.</div>
+
+    <div class="phone-stage">
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="status">9:41</div>
+        <div class="s-head"><span>‹ Back</span><span>Analysis</span></div>
+        <div class="s-title">Round-off back tuck</div>
+        <div class="thumb">
+          <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="#ff3d7f" stroke-width="3" stroke-linecap="round" opacity=".75">
+            <path d="M8 74 Q60 -10 112 74" stroke-dasharray="4 7"/>
+            <circle cx="60" cy="24" r="7" fill="#ff3d7f" stroke="none"/>
+          </svg>
+          <span class="play">▶ 0:04</span>
+        </div>
+        <div class="ring-row">
+          <div class="ring"><div>8.4</div></div>
+          <div class="verdict"><b>Clean pass</b><span>Two small fixes to a 9+</span></div>
+        </div>
+        <div class="metric"><span>Height</span><span>9.1</span></div><div class="track"><i style="width:91%"></i></div>
+        <div class="metric"><span>Tight tuck</span><span>7.2</span></div><div class="track"><i style="width:72%"></i></div>
+        <div class="metric"><span>Landing</span><span>7.9</span></div><div class="track"><i style="width:79%"></i></div>
+        <div class="fixbox"><b>Top fix</b>Knees split in the tuck. Squeeze them together and pull to your chest.</div>
+      </div></div>
+    </div>
+  </header>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Inside the app</p>
+    <h2>Your personal AI cheer coach</h2>
+    <p class="center-sub">Built around the skills judges actually score.</p>
+    <div class="panels">
+      <div class="panel"><h3>Score every pass</h3><p>Out of 10, in seconds</p>
+        <div class="mini"><div class="sc"><div class="lbl">BACK HANDSPRING</div><div class="big">8.9</div>
+          <span class="chip">Height 9.3</span><span class="chip">Form 8.6</span><span class="chip">Landing 8.8</span></div></div></div>
+      <div class="panel"><h3>Know exactly what to fix</h3><p>Plus the drills for it</p>
+        <div class="mini"><div class="sc"><div class="lbl">YOUR FIXES</div>
+          <div class="row">Squeeze knees in tuck<span>+0.6</span></div>
+          <div class="row">Chest up on landing<span>+0.4</span></div>
+          <div class="row">Set higher off the floor<span>+0.3</span></div></div></div></div>
+      <div class="panel"><h3>Watch your score climb</h3><p>Every rep, tracked</p>
+        <div class="mini"><div class="sc"><div class="lbl">STANDING TUCK · 14 DAYS</div>
+          <svg viewBox="0 0 180 90" width="100%" style="margin-top:14px"><polyline points="0,78 30,70 60,72 90,55 120,44 150,30 180,18" fill="none" stroke="#ff3d7f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="big" style="font-size:30px;margin-top:6px">6.1 → 8.2</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">How it works</p>
+    <h2>Three steps. No guessing.</h2>
+    <p class="center-sub">From phone video to a cleaner pass.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Film your pass</h3><p>Any phone, anywhere: practice, open gym or your backyard.</p></div>
+      <div class="step"><div class="n">2</div><h3>Get your score</h3><p>Rated out of 10 and broken down by height, tightness and landing.</p></div>
+      <div class="step"><div class="n">3</div><h3>Fix what costs you</h3><p>The exact corrections and drills for your next rep.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Features</p>
+    <h2>Everything you need before tryouts</h2>
+    <p class="center-sub">Tumbling, jumps and stunts in one app.</p>
+    <div class="feats">
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></div><h3>Video breakdowns</h3><p>Frame-by-frame analysis of every skill you film.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Instant scores</h3><p>Judge-style scoring in seconds, not days.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div><h3>Drill plans</h3><p>Daily drills picked for the skill you're working on.</p></div>
+      <div class="feat"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19l5-6 4 3 7-9"/></svg></div><h3>Progress tracking</h3><p>See every skill improve rep after rep.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0" id="join">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Be first in line</h2>
+      <p class="center-sub">Join the waitlist and get early access the day CheerMaxx launches.</p>
+      <form class="wl" action="https://formsubmit.co/geraldoevon@gmail.com" method="POST">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <input type="hidden" name="_subject" value="New CheerMaxx waitlist signup">
+        <input type="hidden" name="_captcha" value="false">
+        <button type="submit">Get early access</button>
+      </form>
+      <div class="thanks">You're on the list. We'll email you when CheerMaxx launches.</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>© 2026 CheerMaxx</span>
+    <span><a href="https://www.tiktok.com/@cheermaxx">TikTok</a><a href="https://www.instagram.com/cheermaxx/">Instagram</a></span>
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('form.wl').forEach(f => {
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'Joining…';
+      try {
+        await fetch(f.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {method:'POST', headers:{'Accept':'application/json'}, body:new FormData(f)});
+      } catch (err) {}
+      f.style.display = 'none';
+      f.parentElement.querySelector('.thanks').style.display = 'block';
+    });
+  });
+</script>
+</body>
+</html>
