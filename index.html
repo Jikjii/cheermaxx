@@ -34,6 +34,7 @@
   button{border:0;font:inherit;font-weight:700;font-size:15px;color:#fff;background:var(--pink);padding:13px 20px;border-radius:12px;cursor:pointer;white-space:nowrap;box-shadow:0 6px 18px rgba(255,61,127,.35)}
   button:hover{filter:brightness(1.05)}
   .fine{font-size:13px;color:var(--muted);margin-top:12px}
+  .err{display:none;max-width:440px;margin:10px auto 0;font-size:14px;font-weight:600;color:#d1335b}
   .thanks{display:none;max-width:440px;margin:24px auto 0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;font-weight:700}
 
   /* phone */
@@ -119,10 +120,8 @@
     <h1>Cheer<span>Maxx</span></h1>
     <p class="tag">Your pass, scored like a judge.</p>
     <p class="lede">Film your tumbling on your phone. Get a score out of 10, a full skill breakdown and the exact fixes to land it cleaner before tryouts.</p>
-    <form class="wl" action="https://formsubmit.co/geraldoevon@gmail.com" method="POST">
+    <form class="wl" novalidate>
       <input type="email" name="email" placeholder="Enter your email" required>
-      <input type="hidden" name="_subject" value="New CheerMaxx waitlist signup">
-      <input type="hidden" name="_captcha" value="false">
       <button type="submit">Get early access</button>
     </form>
     <p class="fine">Launching soon on iPhone. Free to try.</p>
@@ -207,10 +206,8 @@
     <div class="cta">
       <h2>Be first in line</h2>
       <p class="center-sub">Join the waitlist and get early access the day CheerMaxx launches.</p>
-      <form class="wl" action="https://formsubmit.co/geraldoevon@gmail.com" method="POST">
+      <form class="wl" novalidate>
         <input type="email" name="email" placeholder="Enter your email" required>
-        <input type="hidden" name="_subject" value="New CheerMaxx waitlist signup">
-        <input type="hidden" name="_captcha" value="false">
         <button type="submit">Get early access</button>
       </form>
       <div class="thanks">You're on the list. We'll email you when CheerMaxx launches.</div>
@@ -226,15 +223,36 @@
 </div>
 
 <script>
+  const SB_URL = 'https://tiiactlajcwzltgayaqo.supabase.co/rest/v1/waitlist';
+  const SB_KEY = 'sb_publishable_KSabl4jMK16QBdOka5WGxA_8AA5GOS8';
   document.querySelectorAll('form.wl').forEach(f => {
+    const err = document.createElement('p'); err.className = 'err'; f.after(err);
     f.addEventListener('submit', async e => {
       e.preventDefault();
-      const btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'Joining…';
+      const input = f.querySelector('input[type=email]');
+      const email = input.value.trim().toLowerCase();
+      err.style.display = 'none';
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = 'Enter a valid email.'; err.style.display = 'block'; return; }
+      const btn = f.querySelector('button'); const label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Joining…';
       try {
-        await fetch(f.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {method:'POST', headers:{'Accept':'application/json'}, body:new FormData(f)});
-      } catch (err) {}
-      f.style.display = 'none';
-      f.parentElement.querySelector('.thanks').style.display = 'block';
+        const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 10000);
+        const res = await fetch(SB_URL, {
+          method: 'POST', signal: ctl.signal,
+          headers: {'apikey': SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+          body: JSON.stringify({email, source: new URLSearchParams(location.search).get('ref') || 'site'})
+        });
+        clearTimeout(t);
+        if (res.ok || res.status === 409) {
+          f.style.display = 'none'; err.style.display = 'none';
+          f.parentElement.querySelector('.thanks').style.display = 'block';
+          return;
+        }
+        throw new Error('status ' + res.status);
+      } catch (x) {
+        err.textContent = 'Something went wrong. Please try again.'; err.style.display = 'block';
+        btn.disabled = false; btn.textContent = label;
+      }
     });
   });
 </script>
